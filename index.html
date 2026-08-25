@@ -427,12 +427,12 @@ const ROOMS = {
 const SUBJECTS = {
  '사무행정':{emoji:'📋', roomOf:n=>'A-'+n,
    events:[['📝','1과제','09:00~10:30 · 내 고사실'],['📝','2과제','10:50~11:30 · 내 고사실'],['🍚','점심 급식','11:30~12:30 · 지하 급식실']]},
- '금융실무':{emoji:'🏦', roomOf:n=>'B-'+n, presInfo:{label:'금융실무 발표 1~4실',floor:'3층'},
+ '금융실무':{emoji:'🏦', roomOf:n=>'B-'+n, presInfo:{label:'금융실무 발표실 1~4',floor:'3층'},
    events:[['📝','1과제 실기','09:00~10:00 · 내 고사실'],['🎤','2과제 발표 1조','10:30~12:00 · 내 발표실'],['🍚','점심 급식','12:00~13:00 · 지하 급식실'],['🎤','2과제 발표 2조','13:00~ · 내 발표실']],
-   presRule:'발표실과 발표 조(1조/2조)는 당일 비번호 추첨 후 현장에서 안내해요. 발표 전에는 금융실무 대기 1~4실에서 기다려요.'},
- '창업실무':{emoji:'💡', roomOf:n=>'B-'+n, presInfo:{label:'창업실무 발표 1~4실',floor:'4층'},
+   presRule:'발표실과 발표 조(1조/2조)는 당일 비번호 추첨 후 현장에서 안내해요. 발표 전에는 금융실무 대기실 1~4에서 기다려요.'},
+ '창업실무':{emoji:'💡', roomOf:n=>'B-'+n, presInfo:{label:'창업실무 발표실 1~4',floor:'4층'},
    events:[['📝','1·2과제','11:00~13:00 · 내 고사실'],['🍚','점심 급식','13:00~14:00 · 지하 급식실'],['🎤','발표','14:00~18:00 · 내 발표실']],
-   presRule:'발표실 배정은 당일 비번호 추첨 후 현장에서 안내해요. 발표 전에는 창업실무 대기 1~4실에서 기다려요.'},
+   presRule:'발표실 배정은 당일 비번호 추첨 후 현장에서 안내해요. 발표 전에는 창업실무 대기실 1~4에서 기다려요.'},
  '경리실무':{emoji:'🧾', roomOf:n=>'A-'+n,
    events:[['🍚','점심 급식','11:30~12:30 · 지상 급식실'],['📝','1과제','13:30~14:30 · 내 고사실'],['📝','2과제 실기','15:00~16:30 · 내 고사실']]},
  '회계실무':{emoji:'🧮', roomOf:n=>'B-'+n,
@@ -499,7 +499,7 @@ function renderDetail(p){
       <div class="room">${rname}</div>
       <div class="floor">${rarea} · 수험번호 ${p.num}</div>
     </div>
-    ${pi?`<div class="pres-chip"><span>🎤 내 발표실</span><b>당일 배정</b><small>발표 1~4실 · ${pi.floor} · 추첨 후 안내</small></div>`:''}
+    ${pi?`<div class="pres-chip"><span>🎤 내 발표실</span><b>당일 배정</b><small>발표실 1~4 · ${pi.floor} · 추첨 후 안내</small></div>`:''}
     <div class="mini-map-label">📍 시험장 배치도 · 내 위치</div>
     <div class="map-scroll" id="detail-map">${buildMap([p.room])}</div>
     <p class="mini" style="margin-top:4px">⭐ 노란색으로 반짝이는 칸이 내 고사실이에요. 옆으로 밀어서 확인하세요.${pi?' 발표실은 당일 안내에 따라 이동해 주세요.':''}</p>
@@ -518,8 +518,8 @@ function renderDetail(p){
 /* ── 시간표 ── */
 const SUBJECT_ROOMS={
  '사무행정':{exam:['A-1','A-2','A-3','A-4','A-5'],examCls:'A'},
- '금융실무':{exam:['B-1','B-2','B-3','B-4'],examCls:'B',pres:['발표 1실','발표 2실','발표 3실','발표 4실'],presFloor:'3층',presCls:'F'},
- '창업실무':{exam:['B-1','B-2','B-3','B-4'],examCls:'B',pres:['발표 1실','발표 2실','발표 3실','발표 4실'],presFloor:'4층',presCls:'C'},
+ '금융실무':{exam:['B-1','B-2','B-3','B-4'],examCls:'B',pres:['발표실1','발표실2','발표실3','발표실4'],presFloor:'3층',presCls:'F'},
+ '창업실무':{exam:['B-1','B-2','B-3','B-4'],examCls:'B',pres:['발표실1','발표실2','발표실3','발표실4'],presFloor:'4층',presCls:'C'},
  '경리실무':{exam:['A-1','A-2'],examCls:'A'},
  '회계실무':{exam:['B-1','B-2','B-3','B-4'],examCls:'B'},
  '비즈니스프로그래밍':{exam:['A-3','A-4','A-5'],examCls:'A'}
@@ -534,7 +534,7 @@ const timeChips=document.getElementById('time-chips');
 });
 function renderTime(name){
   const sub=SUBJECTS[name];
-  const evs=sub.events.map(([ic,t,d])=>`<div class="tl-item"><div class="ic">${ic}</div><div class="tt"><b>${t}</b><span>${d.replace('내 발표실', name==='금융실무'?'금융실무 발표 1~4실 (3층)':'창업실무 발표 1~4실 (4층)')}</span></div></div>`).join('');
+  const evs=sub.events.map(([ic,t,d])=>`<div class="tl-item"><div class="ic">${ic}</div><div class="tt"><b>${t}</b><span>${d.replace('내 발표실', name==='금융실무'?'금융실무 발표실 1~4 (3층)':'창업실무 발표실 1~4 (4층)')}</span></div></div>`).join('');
   const sr=SUBJECT_ROOMS[name];
   const roomChips=`<div class="allrooms">
     <div class="ar-label">📍 ${name} 전체 고사장</div>
@@ -587,12 +587,12 @@ const BMAP=[
   [['<em>실습실</em><strong>A-5</strong>','A',1,'A-5'],['과학실','',2,null]]],
  ['4층',
   [['영어실1 (AI)','',1,null],['은행창구실습실1','',1,null],['<em>실습실</em><strong>B-1</strong>','B',1,'B-1']],
-  [['학교기업실','',1,null],['<em>창업실무</em><strong>발표1실</strong>','C',1,'PC1'],['<em>창업실무</em><strong>발표2실</strong>','C',1,'PC2'],['<em>창업실무</em><strong>발표3실</strong>','C',1,'PC3'],['<em>창업실무</em><strong>발표4실</strong>','C',1,'PC4']],
-  [['<em>창업실무</em><strong>대기2실</strong>','C',1,null],['<em>창업실무</em><strong>대기3실</strong>','C',1,null],['<em>창업실무</em><strong>대기4실</strong>','C',1,null]]],
+  [['학교기업실','',1,null],['<em>창업실무</em><strong>발표실1</strong>','C',1,'PC1'],['<em>창업실무</em><strong>발표실2</strong>','C',1,'PC2'],['<em>창업실무</em><strong>발표실3</strong>','C',1,'PC3'],['<em>창업실무</em><strong>발표실4</strong>','C',1,'PC4']],
+  [['<em>창업실무</em><strong>대기실2</strong>','C',1,null],['<em>창업실무</em><strong>대기실3</strong>','C',1,null],['<em>창업실무</em><strong>대기실4</strong>','C',1,null]]],
  ['3층',
-  [['<em>금융실무</em><strong>발표1실</strong>','F',1,'PF1'],['<em>금융실무</em><strong>발표2실</strong>','F',1,'PF2'],['<em>금융실무</em><strong>발표3실</strong>','F',1,'PF3']],
-  [['<em>금융실무</em><strong>발표4실</strong>','F',1,'PF4'],['공통1-5','',1,null],['<em>금융실무</em><strong>대기1실</strong>','F',1,null],['<em>금융실무</em><strong>대기2실</strong>','F',1,null],['<em>금융실무</em><strong>대기3실</strong>','F',1,null]],
-  [['<em>금융실무</em><strong>대기4실</strong>','F',1,null],['글비3-2','',1,null],['<em>창업실무</em><strong>대기1실</strong>','C',1,null]]],
+  [['<em>금융실무</em><strong>발표실1</strong>','F',1,'PF1'],['<em>금융실무</em><strong>발표실2</strong>','F',1,'PF2'],['<em>금융실무</em><strong>발표실3</strong>','F',1,'PF3']],
+  [['<em>금융실무</em><strong>발표실4</strong>','F',1,'PF4'],['공통1-5','',1,null],['<em>금융실무</em><strong>대기실1</strong>','F',1,null],['<em>금융실무</em><strong>대기실2</strong>','F',1,null],['<em>금융실무</em><strong>대기실3</strong>','F',1,null]],
+  [['<em>금융실무</em><strong>대기실4</strong>','F',1,null],['글비3-2','',1,null],['<em>창업실무</em><strong>대기실1</strong>','C',1,null]]],
  ['2층',
   [['<strong>채점본부</strong>','S',1,null],['<strong>내빈실</strong>','S',1,null],['소회의실','',1,null]],
   [['<strong>본교 감독 교사 대기실</strong>','S',4,null],['<em>감독관</em><strong>회의실 2</strong>','S',1,null]],
@@ -641,10 +641,10 @@ const ROOM_SECTIONS=[
    ['실습실 B-4<br><small>5층</small>', sj('금융실무','실기 09:00~10:00')+sj('창업실무','11:00~13:00'), sj('회계실무','14:00~16:50')]],
   desc:'금융실무 → 창업실무 → 회계실무 순서로 세 종목이 이어서 사용해요.'},
  {title:'발표장 · 대기실', head:['실','오전','오후'], rows:[
-   ['금융실무 발표 1~4실<br><small>3층</small>', sj('금융실무','발표 1조 10:30~12:00'), sj('금융실무','발표 2조 13:00~')],
-   ['금융실무 대기 1~4실<br><small>3층</small>', '<span class="dash">발표 전 대기</span>', '<span class="dash">발표 전 대기</span>'],
-   ['창업실무 발표 1~4실<br><small>4층</small>', '<span class="dash">—</span>', sj('창업실무','발표 14:00~18:00')],
-   ['창업실무 대기 1~4실<br><small>대기1실 3층 · 대기2~4실 4층</small>', '<span class="dash">—</span>', '<span class="dash">발표 전 대기</span>']],
+   ['금융실무 발표실 1~4<br><small>3층</small>', sj('금융실무','발표 1조 10:30~12:00'), sj('금융실무','발표 2조 13:00~')],
+   ['금융실무 대기실 1~4<br><small>3층</small>', '<span class="dash">발표 전 대기</span>', '<span class="dash">발표 전 대기</span>'],
+   ['창업실무 발표실 1~4<br><small>4층</small>', '<span class="dash">—</span>', sj('창업실무','발표 14:00~18:00')],
+   ['창업실무 대기실 1~4<br><small>대기실1 3층 · 대기실2~4 4층</small>', '<span class="dash">—</span>', '<span class="dash">발표 전 대기</span>']],
   desc:'발표실과 발표 조는 당일 비번호 추첨 후 현장에서 안내해요.'},
  {title:'본부 · 지원 시설', head:['시설','위치','안내'], rows:[
    ['운영본부','2층','대회 운영 총괄'],
